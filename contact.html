@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact — PUREVER</title>
+  <meta name="description" content="Request a quote or talk to a PUREVER water treatment engineer.">
+  <meta name="theme-color" content="#030a18">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body data-page="contact">
+<div id="site-header"></div>
+<script src="assets/js/layout.js"></script>
+<main id="top">
+<section class="page-hero compact">
+  <div class="bg"><img src="assets/img/photos/partners-meeting.jpg" alt=""></div>
+  <div class="container">
+    <div class="crumbs"><a href="index.html">Home</a> / <span>Contact</span></div>
+    <h1 class="reveal">Talk to an engineer.</h1>
+    <p class="lede reveal" data-delay="1">Quotes, technical questions, service or partnership: one form reaches the right team.</p>
+  </div>
+</section>
+<section class="section contact" id="contact">
+  <div class="container contact-grid">
+    <div>
+      <span class="eyebrow reveal">Talk to an engineer</span>
+      <h2 class="reveal" data-delay="1">Let’s engineer your water.</h2>
+      <p class="lead reveal" data-delay="2">Share your water source and the capacity you need. A PUREVER application engineer will respond within one business day with a preliminary design.</p>
+      <div class="offices reveal" data-delay="3">
+        <div><h5>Global Headquarters</h5><p>PUREVER Ltd<br>London, United Kingdom<br>+44 (0)20 0000 0000<br>hello@purever.co.uk</p></div>
+        <div><h5>Become a partner</h5><p>Distribution, installation and service partnerships are open in selected regions.<br><a href="#contact" style="color:var(--aqua)">partners@purever.co.uk →</a></p></div>
+      </div>
+    </div>
+    <form class="quote reveal" data-delay="2" id="quoteForm" novalidate>
+      <div class="field"><label for="fName">Full name</label><input id="fName" name="name" required autocomplete="name"></div>
+      <div class="field"><label for="fCompany">Company</label><input id="fCompany" name="company" autocomplete="organization"></div>
+      <div class="field"><label for="fEmail">Work email</label><input id="fEmail" name="email" type="email" required autocomplete="email"></div>
+      <div class="field"><label for="fCountry">Country</label><input id="fCountry" name="country" autocomplete="country-name"></div>
+      <div class="field"><label for="fSource">Water source</label>
+        <select id="fSource" name="source"><option>Municipal / mains</option><option>Borehole / well</option><option>Brackish groundwater</option><option>Seawater</option><option>Surface water</option><option>Wastewater reuse</option></select></div>
+      <div class="field"><label for="fCap">Required capacity</label>
+        <select id="fCap" name="capacity"><option>Under 1 m³/day</option><option>1 – 50 m³/day</option><option>50 – 500 m³/day</option><option>500 – 5,000 m³/day</option><option>Over 5,000 m³/day</option></select></div>
+      <div class="field full"><label for="fMsg">Project details</label><textarea id="fMsg" name="message" placeholder="Application, water analysis (if available), timeline…"></textarea></div>
+      <div class="form-ok" id="formOk">Thank you. Your enquiry has been prepared. Connect this form to your email or CRM endpoint to start receiving submissions.</div>
+      <div class="actions">
+        <small>By submitting, you agree to PUREVER processing your data in line with our Privacy Policy (UK GDPR).</small>
+        <button class="btn btn-primary" type="submit">Send enquiry
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+<div id="site-footer"></div>
+<script src="assets/js/renders.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

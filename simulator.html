@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RO Process Simulator — PUREVER</title>
+  <meta name="description" content="Interactive reverse osmosis simulator: feed salinity, pressure, temperature and recovery, with live flux, rejection and energy.">
+  <meta name="theme-color" content="#030a18">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body data-page="simulator">
+<div id="site-header"></div>
+<script src="assets/js/layout.js"></script>
+<main id="top">
+<section class="page-hero plain compact">
+  <div class="container">
+    <div class="crumbs"><a href="index.html">Home</a> / <span>Simulator</span></div>
+    <h1 class="reveal">Engineering tools.</h1>
+    <p class="lede reveal" data-delay="1">Explore how reverse osmosis responds to salinity, pressure, temperature and recovery, then see which stages remove which contaminants.</p>
+  </div>
+</section>
+<section class="section dark sim-section" id="simulator">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow reveal">Interactive engineering</span>
+        <h2 class="reveal" data-delay="1">Reverse Osmosis<br><span class="grad-text">Process Simulator</span></h2>
+      </div>
+      <p class="reveal" data-delay="2">Size a system the way our engineers do. Change feed salinity, pressure, temperature and recovery and watch flux, salt rejection and energy respond. The model uses solution-diffusion membrane equations. Hover over any equipment tag to learn what it does.</p>
+    </div>
+
+    <div class="sim-shell reveal">
+      <div class="sim-toolbar">
+        <div class="title"><span class="win-dots"><i></i><i></i><i></i></span><b>PUREVER ROSA-Lite</b> v4.2 · Single-pass array</div>
+        <div class="presets" id="presets" role="group" aria-label="Scenario presets"></div>
+      </div>
+
+      <div class="sim-body">
+        <!-- Controls -->
+        <div class="sim-controls">
+          <div class="ctl-group">
+            <h5>Feed water</h5>
+            <div class="ctl">
+              <div class="ctl-row"><label for="inTds">Feed salinity (TDS)</label><output id="outTds"></output></div>
+              <input type="range" id="inTds" min="0" max="1000" step="1">
+            </div>
+            <div class="ctl">
+              <div class="ctl-row"><label for="inTemp">Temperature</label><output id="outTemp"></output></div>
+              <input type="range" id="inTemp" min="5" max="40" step="1">
+            </div>
+            <label class="toggle">Pre-treatment (PP + carbon, SDI&nbsp;&lt;&nbsp;3)<input type="checkbox" id="inPre" checked><span class="sw"></span></label>
+            <label class="toggle">Antiscalant dosing<input type="checkbox" id="inAs" checked><span class="sw"></span></label>
+          </div>
+          <div class="ctl-group">
+            <h5>Operating point</h5>
+            <div class="ctl">
+              <div class="ctl-row"><label for="inP">Feed pressure</label><output id="outP"></output></div>
+              <input type="range" id="inP" min="2" max="82" step="0.5">
+            </div>
+            <div class="ctl">
+              <div class="ctl-row"><label for="inR">System recovery</label><output id="outR"></output></div>
+              <input type="range" id="inR" min="15" max="90" step="1">
+            </div>
+            <label class="toggle">Energy recovery device (ERD)<input type="checkbox" id="inErd"><span class="sw"></span></label>
+          </div>
+          <div class="ctl-group">
+            <h5>Membrane array</h5>
+            <div class="ctl">
+              <div class="seg" id="inMem" role="radiogroup" aria-label="Membrane type">
+                <button data-v="LE">Low-energy</button>
+                <button data-v="BW">Brackish</button>
+                <button data-v="SW">Seawater</button>
+              </div>
+            </div>
+            <div class="ctl">
+              <div class="ctl-row"><label for="inV">Pressure vessels (6 × 8040)</label><output id="outV"></output></div>
+              <input type="range" id="inV" min="1" max="16" step="1">
+            </div>
+            <div class="ctl">
+              <div class="ctl-row"><label for="inAge">Membrane age</label><output id="outAge"></output></div>
+              <input type="range" id="inAge" min="0" max="7" step="0.5">
+            </div>
+          </div>
+        </div>
+
+        <!-- Main -->
+        <div class="sim-main">
+          <div class="sim-kpis">
+            <div class="kpi aqua"><div class="k">Permeate flow</div><div class="v" id="kQp">–</div><div class="bar"><i id="bQp"></i></div></div>
+            <div class="kpi aqua"><div class="k">Permeate TDS</div><div class="v" id="kCp">–</div><div class="bar"><i id="bCp"></i></div></div>
+            <div class="kpi"><div class="k">Salt rejection</div><div class="v" id="kRej">–</div><div class="bar"><i id="bRej"></i></div></div>
+            <div class="kpi"><div class="k">Avg. flux</div><div class="v" id="kJ">–</div><div class="bar"><i id="bJ"></i></div></div>
+            <div class="kpi"><div class="k">Net driving pressure (NDP)</div><div class="v" id="kNdp">–</div><div class="bar"><i id="bNdp"></i></div></div>
+            <div class="kpi amber"><div class="k">Specific energy</div><div class="v" id="kSec">–</div><div class="bar"><i id="bSec"></i></div></div>
+          </div>
+
+          <div class="sim-diagram">
+            <div class="pid-legend">
+              <span><i style="background:#8fb4ff"></i>Feed</span>
+              <span><i style="background:#19c3ff"></i>Permeate</span>
+              <span><i style="background:#ffb547"></i>Concentrate</span>
+            </div>
+            <svg id="pid" viewBox="0 0 1100 440" role="img" aria-label="Animated process and instrumentation diagram of the reverse osmosis system"></svg>
+            <div class="pid-tip" id="pidTip"></div>
+          </div>
+
+          <div class="sim-lower">
+            <div class="sim-panel">
+              <h6>Performance curve <span>Qp &amp; TDS vs pressure</span></h6>
+              <canvas id="curve"></canvas>
+            </div>
+            <div class="sim-panel">
+              <h6>Membrane surface <span>molecular view</span></h6>
+              <canvas id="micro"></canvas>
+            </div>
+            <div class="sim-panel">
+              <h6>System status <span id="statusPill" class="status-pill ok">OPTIMAL</span></h6>
+              <div class="alerts" id="alerts"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim-foot">
+        <div class="impact">
+          <span>Daily output <b id="fDaily">–</b></span>
+          <span>Feed required <b id="fFeed">–</b></span>
+          <span>Concentrate <b id="fConc">–</b></span>
+          <span>Supports ≈ <b id="fPeople">–</b> people at 50 L/day</span>
+        </div>
+        <span>Indicative model only. Final designs are validated by PUREVER process engineers.</span>
+      </div>
+    </div>
+
+    <div class="sim-notes">
+      <div class="sim-note reveal"><h4>Solution-diffusion model</h4><p>Water flux <code>J = A·TCF·(ΔP − Δπ)</code>. Salt flux <code>Js = B·TCF·ΔC</code>. Concentration polarisation and the log-mean concentrate salinity are included.</p></div>
+      <div class="sim-note reveal" data-delay="1"><h4>Temperature correction</h4><p>Membrane permeability rises about 3% per °C: <code>TCF = exp[2640·(1/298 − 1/T)]</code>. Warm water produces more permeate at slightly higher salt passage.</p></div>
+      <div class="sim-note reveal" data-delay="2"><h4>Energy &amp; recovery</h4><p>Specific energy is calculated from pump hydraulics at 80% efficiency. The isobaric ERD returns about 95% of the concentrate’s pressure energy to the feed.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section spectrum" id="technology">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow reveal">Technology</span>
+        <h2 class="reveal" data-delay="1">A multi-barrier defence,<br>down to the ion.</h2>
+      </div>
+      <p class="reveal" data-delay="2">Each PUREVER treatment train stacks barriers in sequence. Every stage protects the next, and together they remove contaminants across six orders of magnitude in size.</p>
+    </div>
+    <div class="spec-wrap reveal" id="specWrap">
+      <div class="spec-inner" id="spectrumChart"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div>
+        <h2>Ready to engineer your water?</h2>
+        <p>Send us your water analysis and the capacity you need. A PUREVER application engineer will reply within one business day with a preliminary design and budget.</p>
+      </div>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-primary">Request a quote <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a href="ro-systems.html" class="btn btn-ghost">View systems in 3D</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="site-footer"></div>
+<script src="assets/js/renders.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/simulator.js"></script>
+</body>
+</html>

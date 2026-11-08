@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RO Systems in 3D — PUREVER</title>
+  <meta name="description" content="Explore PUREVER 500, 1000 and 2000 LPH reverse osmosis systems and containerised desalination in interactive 3D.">
+  <meta name="theme-color" content="#030a18">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body data-page="ro">
+<div id="site-header"></div>
+<script src="assets/js/layout.js"></script>
+<main id="top">
+
+<section class="page-hero product-hero">
+  <div class="container ph-grid">
+    <div>
+      <div class="crumbs"><a href="index.html">Home</a> / <span>RO Systems</span></div>
+      <h1 class="reveal">Reverse osmosis systems,<br><span class="grad-text">built to a higher standard.</span></h1>
+      <p class="lede reveal" data-delay="1">From 500 LPH commercial skids to containerised seawater desalination, every PUREVER system is built on a stainless steel frame, fitted with high-rejection membranes and pressure-tested before it leaves our facility. It ships complete with commissioning, operator training and long-term service support.</p>
+      <div class="chips reveal" data-delay="2"><span>500 LPH</span><span>1,000 LPH</span><span>2,000 LPH</span><span>Containerised SWRO</span><span>Custom to 250 m³/h</span></div>
+    </div>
+    <div class="ph-img reveal" data-delay="1"><img src="assets/img/renders/c2000.png" alt="PUREVER PV-C 2000 industrial reverse osmosis system"></div>
+  </div>
+</section>
+
+<section class="cfg" id="configurator">
+  <div class="container">
+    <div class="cfg-tabs" role="tablist" aria-label="Select a model">
+      <button class="cfg-tab" data-model="c500"><span class="cap">500<small>L/h</small></span><span class="nm">PV-C 500 · Commercial</span></button>
+      <button class="cfg-tab" data-model="c1000"><span class="cap">1,000<small>L/h</small></span><span class="nm">PV-C 1000 · Commercial</span></button>
+      <button class="cfg-tab" data-model="c2000"><span class="cap">2,000<small>L/h</small></span><span class="nm">PV-C 2000 · Industrial</span></button>
+      <button class="cfg-tab" data-model="swro"><span class="cap">100<small>m³/day</small></span><span class="nm">PV-SWRO · Containerised</span></button>
+    </div>
+
+    <div class="cfg-shell">
+      <div class="stage" data-pv3d="full">
+        <i class="crop tl"></i><i class="crop tr"></i><i class="crop bl"></i><i class="crop br"></i>
+        <div class="v-loading"><div><div class="spin"></div>LOADING 3D MODEL</div></div>
+        <div class="hotspots" id="hotspots"></div>
+        <div class="v-tip" id="vTip"></div>
+        <div class="s-head">
+          <div class="s-title" id="sTitle"></div>
+          <div class="s-hint">DRAG · ROTATE<br>SCROLL · ZOOM<br>RIGHT-DRAG · PAN<br>CLICK · INSPECT</div>
+        </div>
+        <div class="zoom-ctl"><button id="zIn" aria-label="Zoom in">+</button><button id="zOut" aria-label="Zoom out">−</button></div>
+        <div class="tools" role="toolbar" aria-label="3D view tools">
+          <button class="tool icon" id="tReset" title="Reset view"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 8a5.5 5.5 0 1 0 1.6-3.9M2.5 2.5v2.5H5"/></svg><span>Reset</span></button>
+          <button class="tool" id="tExplode"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6L2 2m0 0v3m0-3h3M10 6l4-4m0 0v3m0-3h-3M6 10l-4 4m0 0v-3m0 3h3M10 10l4 4m0 0v-3m0 3h-3"/></svg><span>Explode</span></button>
+          <button class="tool" id="tFlow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 5c2 0 2-2 4.5-2S8 5 10.5 5 13 3 15 3M1 11c2 0 2-2 4.5-2S8 11 10.5 11 13 9 15 9"/></svg><span>Flow</span></button>
+          <button class="tool" id="tDims"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1.5 12.5h13M1.5 10.5v4M14.5 10.5v4M3 2.5h10v6H3z"/></svg><span>Dimensions</span></button>
+          <button class="tool" id="tWalls" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1.5 5.5l6.5-3 6.5 3v5l-6.5 3-6.5-3zM8 8.5v5M1.5 5.5L8 8.5l6.5-3"/></svg><span>Cutaway</span></button>
+          <button class="tool" id="tLabels"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="5.5"/><path d="M8 5.5v.01M8 7.5v3.5"/></svg><span>Hotspots</span></button>
+          <button class="tool icon" id="tRotate" title="Auto-rotate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13.5 8A5.5 5.5 0 0 1 3 10.5M2.5 8A5.5 5.5 0 0 1 13 5.5M13.5 2.5v3h-3M2.5 13.5v-3h3"/></svg><span>Auto-rotate</span></button>
+          <button class="tool icon" id="tFull" title="Fullscreen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"/></svg><span>Fullscreen</span></button>
+        </div>
+      </div>
+
+      <aside class="v-panel">
+        <div class="pv-head">
+          <div class="sku" id="pvSku"></div>
+          <h3 id="pvName"></h3>
+          <p id="pvDesc"></p>
+          <div class="kv" id="pvKv"></div>
+        </div>
+        <div class="pv-body">
+          <div class="comp-detail" id="compDetail"></div>
+          <h6>Components · click to inspect</h6>
+          <ul class="comp-list" id="compList"></ul>
+        </div>
+        <div class="pv-foot">
+          <a class="btn btn-primary" id="pvQuote" href="contact.html">Request quote</a>
+          <a class="btn btn-ghost" href="#">Datasheet</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-bottom:60px">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow reveal">Compare models</span>
+        <h2 class="reveal" data-delay="1">Choose the right platform.</h2>
+      </div>
+      <p class="reveal" data-delay="2">Every platform can be customised: membrane type, pre-treatment, materials of construction, control philosophy and voltage. These are standard configurations.</p>
+    </div>
+    <div class="compare-wrap reveal">
+      <table class="compare">
+        <thead><tr><th></th><th>PV-C 500<small>COMMERCIAL</small></th><th>PV-C 1000<small>COMMERCIAL</small></th><th>PV-C 2000<small>INDUSTRIAL</small></th><th>PV-SWRO 100<small>CONTAINERISED</small></th></tr></thead>
+        <tbody>
+          <tr><th>Permeate capacity</th><td>500 L/h</td><td>1,000 L/h</td><td>2,000 L/h</td><td>100 m³/day</td></tr>
+          <tr><th>Feed water</th><td>Mains / borehole</td><td>Mains / borehole</td><td>Brackish ≤ 5,000 mg/L</td><td>Seawater ≤ 45,000 mg/L</td></tr>
+          <tr><th>Membranes</th><td>2 × BW-4040</td><td>3 × BW-4040</td><td>3 × BW-8040</td><td>4 × SW-8040</td></tr>
+          <tr><th>Recovery</th><td>50–65%</td><td>55–70%</td><td>65–75%</td><td>40–45%</td></tr>
+          <tr><th>Pre-treatment</th><td>PP + CTO cartridges</td><td>PP + CTO cartridges</td><td>SS cartridge housing</td><td>MMF + cartridge + dosing</td></tr>
+          <tr><th>High-pressure pump</th><td>1.1 kW</td><td>2.2 kW</td><td>4.0 kW + VFD</td><td>11 kW + VFD + ERD</td></tr>
+          <tr><th>Disinfection</th><td>Optional UV</td><td>UV 6 GPM</td><td>UV 12 GPM</td><td>UV + remineralisation</td></tr>
+          <tr><th>Control</th><td>PLC, 4.3" HMI</td><td>PLC, 7" HMI</td><td>PLC, 10" HMI</td><td>PLC + SCADA + 4G</td></tr>
+          <tr><th>Footprint</th><td>1.2 × 0.65 × 1.6 m</td><td>1.5 × 0.7 × 1.7 m</td><td>1.9 × 0.85 × 1.9 m</td><td>20' ISO container</td></tr>
+          <tr><th></th><td><a href="?model=c500#configurator">View in 3D →</a></td><td><a href="?model=c1000#configurator">View in 3D →</a></td><td><a href="?model=c2000#configurator">View in 3D →</a></td><td><a href="?model=swro#configurator">View in 3D →</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:40px">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow reveal">How it works</span>
+        <h2 class="reveal" data-delay="1">Inside every PUREVER RO.</h2>
+      </div>
+      <p class="reveal" data-delay="2">Five engineered stages, each one protecting the next. <a href="simulator.html" style="color:var(--aqua-600);font-weight:600">Try the process simulator →</a></p>
+    </div>
+    <div class="stages-row">
+      <div class="stage-card reveal"><span class="no">01</span><h4>Pre-filtration</h4><p>Sediment and carbon cartridges, or media filters, remove particles and chlorine.</p></div>
+      <div class="stage-card reveal" data-delay="1"><span class="no">02</span><h4>Pressurisation</h4><p>A multistage pump raises the feed above its osmotic pressure.</p></div>
+      <div class="stage-card reveal" data-delay="2"><span class="no">03</span><h4>Membrane separation</h4><p>Spiral-wound polyamide elements reject 99%+ of dissolved salts.</p></div>
+      <div class="stage-card reveal" data-delay="3"><span class="no">04</span><h4>Disinfection</h4><p>UV inactivates microorganisms in the permeate before storage.</p></div>
+      <div class="stage-card reveal" data-delay="4"><span class="no">05</span><h4>Control &amp; monitoring</h4><p>PLC automation, flushing, alarms and remote telemetry.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:20px">
+  <div class="container split">
+    <div class="split-media reveal">
+      <img src="assets/img/photos/fabrication-welding.jpg" alt="Stainless steel fabrication of an RO skid frame" loading="lazy">
+      <div class="float-card br dark"><div class="n">1.5×</div><div class="l">Design pressure applied in every hydrostatic test</div></div>
+    </div>
+    <div>
+      <span class="eyebrow reveal">Built &amp; tested</span>
+      <h2 class="reveal" data-delay="1">Fabricated to last decades, not seasons.</h2>
+      <p class="body reveal" data-delay="2">Frames are TIG-welded and electropolished SS304/316. High-pressure manifolds use orbital welds and grooved couplings. Every skid is hydrostatically tested, then run on water at our facility, and it ships with its test record, P&amp;ID and O&amp;M manual.</p>
+      <ul class="ticks reveal" data-delay="3">
+        <li>Factory acceptance test (FAT) witnessed on request</li>
+        <li>Materials certificates and weld traceability</li>
+        <li>Spare parts kits for 2 years of operation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div>
+        <h2>Ready to engineer your water?</h2>
+        <p>Send us your water analysis and the capacity you need. A PUREVER application engineer will reply within one business day with a preliminary design and budget.</p>
+      </div>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-primary">Request a quote <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a href="ro-systems.html" class="btn btn-ghost">View systems in 3D</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="site-footer"></div>
+<script src="assets/js/renders.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js"></script>
+<script src="assets/js/viewer3d.js"></script>
+</body>
+</html>
