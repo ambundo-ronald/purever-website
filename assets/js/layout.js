@@ -2,6 +2,36 @@
    PUREVER — Shared header & footer (edit navigation here, once, for all pages)
    ========================================================================== */
 (function () {
+  /* ------------------------------------------------------------------
+     CONTACT DETAILS: single source of truth for the whole site.
+     DEMO VALUES: replace with real details before going live.
+     (+44 20 7946 0xxx is an Ofcom-reserved drama range: it never rings.)
+     ------------------------------------------------------------------ */
+  const C = window.PV_CONTACT = {
+    company: 'PUREVER Ltd',
+    street: 'PUREVER House, 25 Westferry Circus',
+    area: 'Canary Wharf',
+    city: 'London',
+    postcode: 'E14 8RR',
+    country: 'United Kingdom',
+    phone: '+44 20 7946 0123',
+    whatsapp: '+44 20 7946 0123',
+    email: 'hello@purever.co.uk',
+    salesEmail: 'sales@purever.co.uk',
+    partnerEmail: 'partners@purever.co.uk',
+    serviceEmail: 'service@purever.co.uk',
+    hours: 'Mon–Fri · 08:30–17:30 GMT',
+    lat: 51.5055, lon: -0.0275,
+    regional: [
+      { name: 'East Africa office', street: 'Westlands', city: 'Nairobi', country: 'Kenya', email: 'nairobi@purever.co.uk' },
+    ],
+  };
+  const tel = (n) => 'tel:' + n.replace(/[^\d+]/g, '');
+  const wa = (n) => 'https://wa.me/' + n.replace(/\D/g, '');
+  const addr1 = `${C.street}, ${C.area}`;
+  const addrFull = `${C.street}, ${C.area}, ${C.city} ${C.postcode}, ${C.country}`;
+  const mapsLink = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(addrFull);
+
   const PAGES = [
     { href: 'ro-systems.html', n: 'RO Systems', k: 'ro' },
     { href: 'products.html', n: 'Products', k: 'products' },
@@ -24,13 +54,13 @@
   <div class="topbar">
     <div class="container">
       <div class="tb-left">
-        <span><i class="dot"></i>Global HQ · London, United Kingdom</span>
-        <span>EMEA · Africa · Asia-Pacific · Americas</span>
+        <span><i class="dot"></i>Global HQ · ${C.city}, ${C.country}</span>
+        <span>${C.hours}</span>
       </div>
       <div class="tb-right">
         <a href="about.html#global">Find a partner</a>
-        <a href="contact.html">Partner portal</a>
-        <a href="#" aria-label="Language">EN-GB ▾</a>
+        <a href="mailto:${C.email}">${C.email}</a>
+        <a href="${tel(C.phone)}" class="tb-phone">${C.phone}</a>
       </div>
     </div>
   </div>
@@ -61,6 +91,12 @@
         <div class="foot-brand">
           <a href="index.html" class="logo">${logo.replace(/<defs>.*<\/defs>/s, '')}</a>
           <p>Reverse osmosis, filtration and disinfection engineering for a water-secure world. Headquartered in the United Kingdom and partnering across five continents.</p>
+          <address class="foot-contact">
+            <a href="${mapsLink}" target="_blank" rel="noopener">${C.street}<br>${C.area}, ${C.city} ${C.postcode}<br>${C.country}</a>
+            <a href="${tel(C.phone)}"><b>T</b> ${C.phone}</a>
+            <a href="mailto:${C.email}"><b>E</b> ${C.email}</a>
+            <span><b>H</b> ${C.hours}</span>
+          </address>
           <div class="socials">
             <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.3-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21H9z"/></svg></a>
             <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.75 15.02V8.98L15.5 12z"/></svg></a>
@@ -81,7 +117,42 @@
 
   const h = document.getElementById('site-header');
   if (h) h.outerHTML = header;
-  const putFooter = () => { const f = document.getElementById('site-footer'); if (f) f.outerHTML = footer; };
+
+  // structured data so search engines can show address, phone and hours
+  const ld = document.createElement('script');
+  ld.type = 'application/ld+json';
+  ld.textContent = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'Organization', name: 'PUREVER', legalName: C.company,
+    url: location.origin + location.pathname.replace(/[^/]*$/, ''), email: C.email, telephone: C.phone,
+    address: { '@type': 'PostalAddress', streetAddress: C.street, addressLocality: C.city, postalCode: C.postcode, addressCountry: 'GB' },
+    contactPoint: [{ '@type': 'ContactPoint', telephone: C.phone, contactType: 'sales', areaServed: 'Worldwide', availableLanguage: 'English' }],
+  });
+  document.head.appendChild(ld);
+  const putFooter = () => {
+    const f = document.getElementById('site-footer'); if (f) f.outerHTML = footer;
+    // fill any [data-c] placeholders on the page (e.g. contact page)
+    const val = {
+      company: C.company, addr1, addrFull, city: `${C.city} ${C.postcode}`, country: C.country,
+      phone: C.phone, email: C.email, salesEmail: C.salesEmail, partnerEmail: C.partnerEmail, serviceEmail: C.serviceEmail, hours: C.hours,
+    };
+    const href = { phone: tel(C.phone), email: 'mailto:' + C.email, salesEmail: 'mailto:' + C.salesEmail, partnerEmail: 'mailto:' + C.partnerEmail, serviceEmail: 'mailto:' + C.serviceEmail, maps: mapsLink, whatsapp: wa(C.whatsapp) };
+    document.querySelectorAll('[data-c]').forEach(el => { if (val[el.dataset.c] != null) el.textContent = val[el.dataset.c]; });
+    document.querySelectorAll('[data-link]').forEach(el => { if (href[el.dataset.link]) el.href = href[el.dataset.link]; });
+    const map = document.getElementById('officeMap');
+    if (map) {
+      const d = 0.012;
+      map.src = `https://www.openstreetmap.org/export/embed.html?bbox=${C.lon - d * 1.6},${C.lat - d},${C.lon + d * 1.6},${C.lat + d}&layer=mapnik&marker=${C.lat},${C.lon}`;
+    }
+    const reg = document.getElementById('regionalOffices');
+    if (reg) reg.innerHTML = C.regional.map(r => `<div class="office-mini"><h5>${r.name}</h5><p>${r.street}, ${r.city}<br>${r.country}<br><a href="mailto:${r.email}">${r.email}</a></p></div>`).join('');
+    // floating WhatsApp button
+    if (C.whatsapp && !document.querySelector('.wa-float')) {
+      const a = document.createElement('a');
+      a.className = 'wa-float'; a.href = wa(C.whatsapp); a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('aria-label', 'Chat with PUREVER on WhatsApp');
+      a.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span>WhatsApp us</span>';
+      document.body.appendChild(a);
+    }
+  };
   if (document.getElementById('site-footer')) putFooter();
   else document.addEventListener('DOMContentLoaded', putFooter);
 })();

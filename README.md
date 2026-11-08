@@ -29,7 +29,8 @@ The header and footer for **all** pages live in `assets/js/layout.js`. Edit the 
 - Reference projects: `projects` array in `main.js` (illustrative examples, not real installations).
 - Standards strip: list only certifications PUREVER actually holds.
 - Model specifications in `viewer3d.js` and the comparison table in `ro-systems.html`: confirm them against your real datasheets.
-- Contact details and the quote form endpoint (the form currently only shows a confirmation).
+- **Contact details (DEMO)**: address, phone, WhatsApp, emails, hours and regional offices are all in the `PV_CONTACT` object at the top of `assets/js/layout.js`. Change them there once and every page updates (header, footer, contact page, map, WhatsApp button, search-engine data). Update `lat`/`lon` so the map pin moves.
+- Quote form endpoint (the form currently only shows a confirmation).
 
 ## Using real product photos in the catalogue
 Add `img: 'assets/img/name.jpg'` to a product in the `products` array in `main.js`.

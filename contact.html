@@ -32,9 +32,12 @@
       <span class="eyebrow reveal">Talk to an engineer</span>
       <h2 class="reveal" data-delay="1">Let’s engineer your water.</h2>
       <p class="lead reveal" data-delay="2">Share your water source and the capacity you need. A PUREVER application engineer will respond within one business day with a preliminary design.</p>
-      <div class="offices reveal" data-delay="3">
-        <div><h5>Global Headquarters</h5><p>PUREVER Ltd<br>London, United Kingdom<br>+44 (0)20 0000 0000<br>hello@purever.co.uk</p></div>
-        <div><h5>Become a partner</h5><p>Distribution, installation and service partnerships are open in selected regions.<br><a href="#contact" style="color:var(--aqua)">partners@purever.co.uk →</a></p></div>
+      <div class="contact-lines reveal" data-delay="3">
+        <a class="cl" data-link="phone" href="#"><span class="k">Call us</span><span class="v" data-c="phone"></span></a>
+        <a class="cl" data-link="whatsapp" href="#" target="_blank" rel="noopener"><span class="k">WhatsApp</span><span class="v">Chat with an engineer</span></a>
+        <a class="cl" data-link="salesEmail" href="#"><span class="k">Sales &amp; quotes</span><span class="v" data-c="salesEmail"></span></a>
+        <a class="cl" data-link="serviceEmail" href="#"><span class="k">Service &amp; spares</span><span class="v" data-c="serviceEmail"></span></a>
+        <a class="cl" data-link="partnerEmail" href="#"><span class="k">Partnerships</span><span class="v" data-c="partnerEmail"></span></a>
       </div>
     </div>
     <form class="quote reveal" data-delay="2" id="quoteForm" novalidate>
@@ -54,6 +57,36 @@
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
       </div>
     </form>
+  </div>
+</section>
+
+<section class="section visit" id="visit">
+  <div class="container visit-grid">
+    <div class="office-card reveal">
+      <span class="eyebrow">Visit us</span>
+      <h2>Global headquarters</h2>
+      <address>
+        <b data-c="company"></b><br>
+        <span data-c="addr1"></span><br>
+        <span data-c="city"></span><br>
+        <span data-c="country"></span>
+      </address>
+      <dl class="office-dl">
+        <div><dt>Telephone</dt><dd><a data-link="phone" href="#" data-c="phone"></a></dd></div>
+        <div><dt>Email</dt><dd><a data-link="email" href="#" data-c="email"></a></dd></div>
+        <div><dt>Opening hours</dt><dd data-c="hours"></dd></div>
+      </dl>
+      <div class="hero-actions">
+        <a class="btn btn-primary" data-link="maps" href="#" target="_blank" rel="noopener">Get directions <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="btn btn-outline" data-link="phone" href="#">Call now</a>
+      </div>
+      <h6 class="reg-title">Regional offices</h6>
+      <div id="regionalOffices"></div>
+      <p class="reg-note">Plus certified partners in 11 regional hubs. <a href="about.html#global">Find your nearest partner →</a></p>
+    </div>
+    <div class="map-wrap reveal" data-delay="1">
+      <iframe id="officeMap" title="Map showing the PUREVER headquarters location" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </div>
   </div>
 </section>
 
